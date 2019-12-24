@@ -1,0 +1,55 @@
+{
+  "name": "slot-machine-server",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mostafasaffari/Test-Project-Slot-Machine.git"
+  },
+  "keywords": [
+    "Nodejs",
+    "TypeScript",
+    "Slot",
+    "machine"
+  ],
+  "bugs": {
+    "url": "https://github.com/Mostafasaffari/Test-Project-Slot-Machine/issues"
+  },
+  "homepage": "https://github.com/Mostafasaffari/Test-Project-Slot-Machine#readme",
+  "scripts": {
+    "build": "npm run build-ts && npm run tslint",
+    "serve": "node dist/index.js",
+    "watch-node": "nodemon dist/index.js",
+    "build-ts": "tsc",
+    "watch-ts": "tsc -w",
+    "tslint": "tslint -c tslint.json -p tsconfig.json",
+    "watch": "concurrently -k -p \"[{name}]\" -n \"TypeScript,Node\" -c \"yellow.bold,cyan.bold,green.bold\" \"npm run watch-ts\" \"npm run watch-node\"",
+    "start": "npm run serve"
+  },
+  "devDependencies": {
+    "@types/async": "^2.4.1",
+    "@types/bcrypt-nodejs": "0.0.30",
+    "@types/body-parser": "^1.17.0",
+    "@types/errorhandler": "0.0.32",
+    "@types/express": "^4.16.1",
+    "@types/mongoose": "^5.3.17",
+    "@types/node": "^11.9.4",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "concurrently": "^4.1.0",
+    "dotenv": "^6.2.0",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.3"
+  },
+  "dependencies": {
+    "@types/dotenv": "^6.1.0",
+    "@types/moment-jalaali": "^0.7.4",
+    "body-parser": "^1.18.3",
+    "errorhandler": "^1.5.0",
+    "express": "^4.16.4",
+    "moment-jalaali": "^0.8.3",
+    "mongoose": "^5.4.12",
+    "nodemon": "^1.18.10",
+    "ts-node": "^8.0.2"
+  }
+}

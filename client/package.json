@@ -1,0 +1,86 @@
+{
+  "name": "test-project-slot-machine",
+  "version": "1.0.0",
+  "description": "This is a Slot machine project developed by React",
+  "main": "index.tsx",
+  "keywords": [
+    "React",
+    "Redux",
+    "Hook",
+    "CRA",
+    "StyledComponent",
+    "TypeScript",
+    "Jest",
+    "Testing-library",
+    "Ant design"
+  ],
+  "author": "Mostafa Saffari",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mostafasaffari/Test-Project-Slot-Machine/issues"
+  },
+  "homepage": "https://github.com/Mostafasaffari/Test-Project-Slot-Machine#readme",
+  "dependencies": {
+    "@types/color": "^3.0.0",
+    "@types/jest": "24.0.18",
+    "@types/node": "12.7.9",
+    "@types/react": "16.9.3",
+    "@types/react-dom": "16.9.1",
+    "@types/react-redux": "^7.1.5",
+    "@types/react-router-dom": "^5.1.0",
+    "@types/styled-components": "^4.4.1",
+    "antd": "^3.26.2",
+    "antd-local-icon": "^0.1.3",
+    "classnames": "^2.2.6",
+    "color": "^3.1.2",
+    "connected-react-router": "^6.6.1",
+    "i18next": "^17.2.0",
+    "i18next-chained-backend": "^2.0.0",
+    "i18next-localstorage-backend": "^3.0.0",
+    "i18next-xhr-backend": "^3.2.0",
+    "node-sass": "^4.13.0",
+    "react": "^16.10.1",
+    "react-dom": "^16.10.1",
+    "react-i18next": "^10.13.1",
+    "react-redux": "^7.1.3",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.1.2",
+    "redux": "^4.0.4",
+    "redux-devtools": "^3.5.0",
+    "redux-devtools-dock-monitor": "^1.1.3",
+    "redux-devtools-log-monitor": "^1.4.0",
+    "styled-components": "^4.4.1",
+    "styled-theme": "^0.3.3",
+    "typescript": "3.6.3"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "release": "standard-version"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mostafasaffari/Test-Project-Slot-Machine.git"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^9.4.0",
+    "standard-version": "^7.0.0"
+  }
+}
