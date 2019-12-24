@@ -9,5 +9,7 @@ export default (
   next: NextFunction
 ) => {
   error.create({ errorDetails: err });
-  res.status(500).json({ message: "Something broke!" });
+  res
+    .status(500)
+    .json({ message: err.message ? err.message : "Something went wrong!" });
 };
