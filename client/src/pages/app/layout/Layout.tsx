@@ -44,15 +44,27 @@ const App: React.FC<IProps> = ({ match, history }) => {
   const navigationSidebarData: INavigationSidebar[] = [
     {
       id: 1,
-      title: t("sidebarMenu.todoList"),
-      link: "todoList",
+      title: t("sidebarMenu.countries"),
+      link: "all-countries",
       icon: "ordered-list"
     },
     {
       id: 2,
-      title: t("sidebarMenu.setting"),
-      link: "setting",
-      icon: "setting"
+      title: t("sidebarMenu.infoCountries"),
+      link: "get-info-country",
+      icon: "flag"
+    },
+    {
+      id: 3,
+      title: t("sidebarMenu.filterCountries"),
+      link: "search-countries",
+      icon: "filter"
+    },
+    {
+      id: 4,
+      title: t("sidebarMenu.slotMachine"),
+      link: "slot-machine",
+      icon: "dollar"
     }
   ];
   return (

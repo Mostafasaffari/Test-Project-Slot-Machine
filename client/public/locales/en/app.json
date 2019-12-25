@@ -5,10 +5,12 @@
   "login": "Login",
   "dashboard": "Dashboard",
   "sidebarMenu": {
-    "todoList": "Todo List",
-    "setting": "Setting"
+    "filterCountries": "Filter by countries",
+    "countries": "List of countries",
+    "infoCountries": "Get info country",
+    "slotMachine": "Slot machine"
   },
   "footer": {
-    "copy": "Instarabbit Co ©2019"
+    "copy": "Slot-Machine ©2019"
   }
 }
