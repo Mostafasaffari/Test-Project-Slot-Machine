@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 
-import { emailPattern, passwordPattern } from "../../helpers/regexPatterns";
-
 import Input from "../../components/ui-kit/input";
 import Button from "../../components/ui-kit/button";
 import message from "../../components/ui-kit/message";
@@ -12,6 +10,8 @@ interface IProps {
   title: string;
   usernamePlaceholder: string;
   passwordPlaceholder: string;
+  usernamePattern: RegExp;
+  passwordPattern: RegExp;
   buttonText: string;
   onLoginClick: (username: string, password: string) => void;
 }
@@ -21,7 +21,9 @@ const Login: React.FC<IProps> = ({
   usernamePlaceholder,
   passwordPlaceholder,
   buttonText,
-  onLoginClick
+  onLoginClick,
+  usernamePattern,
+  passwordPattern
 }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -43,7 +45,7 @@ const Login: React.FC<IProps> = ({
     if (
       username &&
       password &&
-      username.match(emailPattern) &&
+      username.match(usernamePattern) &&
       password.match(passwordPattern)
     ) {
       onLoginClick(username, password);
@@ -62,7 +64,7 @@ const Login: React.FC<IProps> = ({
             placeholder={usernamePlaceholder}
             onChange={handleChangeFieldLogin("username")}
             required
-            pattern={new RegExp(emailPattern).source}
+            pattern={new RegExp(usernamePattern).source}
             title="Enter valid email address!"
           />
           <Input.Password

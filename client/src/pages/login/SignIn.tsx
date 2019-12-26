@@ -4,6 +4,8 @@ import { ThemeProvider } from "styled-components";
 import { RouteComponentProps } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 
+import { emailPattern, passwordPattern } from "../../helpers/regexPatterns";
+
 import { AppState } from "../../redux/store";
 import userActions from "../../redux/user/actions";
 
@@ -76,6 +78,8 @@ const SignIn: React.FC<IProps> = ({ history }) => {
                 passwordPlaceholder={t("password")}
                 onLoginClick={handleLogin}
                 buttonText={t("login")}
+                usernamePattern={emailPattern}
+                passwordPattern={passwordPattern}
               />
             </TabPane>
             <TabPane
@@ -94,6 +98,8 @@ const SignIn: React.FC<IProps> = ({ history }) => {
                 passwordPlaceholder={t("password")}
                 onRegisterClick={handleRegister}
                 buttonText={t("register")}
+                usernamePattern={emailPattern}
+                passwordPattern={passwordPattern}
               ></Register>
             </TabPane>
           </Tabs>
