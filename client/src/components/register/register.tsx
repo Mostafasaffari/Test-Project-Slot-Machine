@@ -1,9 +1,14 @@
 import React, { useState } from "react";
 
+import { emailPattern, passwordPattern } from "../../helpers/regexPatterns";
+
 import Input from "../../components/ui-kit/input";
 import Button from "../../components/ui-kit/button";
+import message from "../../components/ui-kit/message";
+
 
 import RegisterWrapper from "./register.style";
+
 
 interface IProps {
   title: string;
@@ -26,9 +31,9 @@ const Register: React.FC<IProps> = ({
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleChangeFieldRegister = (field: "name" | "username" | "password") => (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleChangeFieldRegister = (
+    field: "name" | "username" | "password"
+  ) => (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (field) {
       case "username":
         setUsername(event.target.value);
@@ -41,8 +46,19 @@ const Register: React.FC<IProps> = ({
         break;
     }
   };
-  const handleRegister = () => {
-    onRegisterClick(name, username, password);
+  const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (
+      username &&
+      password &&
+      name &&
+      username.match(emailPattern) &&
+      password.match(passwordPattern)
+    ) {
+      onRegisterClick(name, username, password);
+    } else {
+      message.error("Please fill out all input!!");
+    }
   };
   return (
     <RegisterWrapper>
@@ -50,21 +66,29 @@ const Register: React.FC<IProps> = ({
         <div className="register-box-header">
           <span>{title}</span>
         </div>
-        <div className="register-box-body">
+        <form className="register-box-body" onSubmit={handleRegister}>
           <Input
             placeholder={namePlaceholder}
             onChange={handleChangeFieldRegister("name")}
+            required
+            title="Enter name or fullname"
           />
           <Input
             placeholder={usernamePlaceholder}
             onChange={handleChangeFieldRegister("username")}
+            required
+            pattern={new RegExp(emailPattern).source}
+            title="Enter valid email address!"
           />
           <Input.Password
             placeholder={passwordPlaceholder}
             onChange={handleChangeFieldRegister("password")}
+            required
+            pattern={new RegExp(passwordPattern).source}
+            title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
           />
-          <Button onClick={handleRegister}>{buttonText}</Button>
-        </div>
+          <Button htmlType="submit">{buttonText}</Button>
+        </form>
       </div>
     </RegisterWrapper>
   );

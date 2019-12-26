@@ -72,7 +72,7 @@ const SignIn: React.FC<IProps> = ({ history }) => {
             >
               <Login
                 title={t("login")}
-                usernamePlaceholder={t("username")}
+                usernamePlaceholder={t("email")}
                 passwordPlaceholder={t("password")}
                 onLoginClick={handleLogin}
                 buttonText={t("login")}
@@ -90,7 +90,7 @@ const SignIn: React.FC<IProps> = ({ history }) => {
               <Register
                 title={t("register")}
                 namePlaceholder={t("name")}
-                usernamePlaceholder={t("username")}
+                usernamePlaceholder={t("email")}
                 passwordPlaceholder={t("password")}
                 onRegisterClick={handleRegister}
                 buttonText={t("register")}
