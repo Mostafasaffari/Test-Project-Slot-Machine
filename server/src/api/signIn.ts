@@ -27,7 +27,7 @@ router.post(
       if (!email || !password || !currentUser) {
         return res
           .status(401)
-          .json("email or password is incorrect!!")
+          .json(ResponseData(null, "email or password is incorrect!!"))
           .end();
       }
       const token = jwt.sign({ email }, jwtKey, {
@@ -55,7 +55,7 @@ router.post(
       } else {
         res
           .status(409)
-          .json(ResponseData("This email is already registered!!!"));
+          .json(ResponseData(null, "This email is already registered!!!"));
       }
     } catch (err) {
       next(err);
@@ -63,4 +63,7 @@ router.post(
   }
 );
 
+router.get("/users", (req: Request, res: Response, next: NextFunction) => {
+  res.status(200).json(memoryUser);
+});
 export default router;

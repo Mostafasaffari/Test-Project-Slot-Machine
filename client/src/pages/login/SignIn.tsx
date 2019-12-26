@@ -7,10 +7,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../redux/store";
 import userActions from "../../redux/user/actions";
 
-import Icon from "../../components/ui-kit/icon";
+import { registerApi, signInApi } from "../../services/users";
+
 import Login from "../../components/login";
-import { Tabs, TabPane } from "../../components/ui-kit/tabs";
+import Icon from "../../components/ui-kit/icon";
 import Register from "../../components/register";
+import message from "../../components/ui-kit/message";
+import { Tabs, TabPane } from "../../components/ui-kit/tabs";
 
 import SignInWrapper from "./signIn.style";
 
@@ -28,12 +31,30 @@ const SignIn: React.FC<IProps> = ({ history }) => {
     }
   });
 
-  const handleLogin = (username: string, password: string) => {
-    dispatch(userActions.signIn("Test token --:)", username));
-    history.push("/app");
+  const handleLogin = async (username: string, password: string) => {
+    try {
+      const response = await signInApi({ email: username, password });
+      if (response) {
+        dispatch(userActions.signIn(response, username));
+        history.push("/app");
+      }
+    } catch (err) {
+      message.error(err, 5);
+    }
   };
-  const handleRegister = (name: string, username: string, password: string) => {
-    console.log(name, username, password);
+  const handleRegister = async (
+    name: string,
+    username: string,
+    password: string
+  ) => {
+    try {
+      const response = await registerApi({ name, password, email: username });
+      if (response.email === username) {
+        handleLogin(username, password);
+      }
+    } catch (err) {
+      message.error(err, 5);
+    }
   };
   return (
     <ThemeProvider theme={theme}>
