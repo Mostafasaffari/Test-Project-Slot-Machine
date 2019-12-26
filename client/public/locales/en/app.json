@@ -1,7 +1,9 @@
 {
   "title": "Simple Dashboard",
-  "username": "Username",
+  "name": "Name",
+  "username": "Email",
   "password": "Password",
+  "register": "Register",
   "login": "Login",
   "dashboard": "Dashboard",
   "sidebarMenu": {

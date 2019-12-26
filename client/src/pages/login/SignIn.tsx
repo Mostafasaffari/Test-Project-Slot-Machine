@@ -7,7 +7,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { AppState } from "../../redux/store";
 import userActions from "../../redux/user/actions";
 
+import Icon from "../../components/ui-kit/icon";
 import Login from "../../components/login";
+import { Tabs, TabPane } from "../../components/ui-kit/tabs";
+import Register from "../../components/register";
 
 import SignInWrapper from "./signIn.style";
 
@@ -29,17 +32,50 @@ const SignIn: React.FC<IProps> = ({ history }) => {
     dispatch(userActions.signIn("Test token --:)", username));
     history.push("/app");
   };
+  const handleRegister = (name: string, username: string, password: string) => {
+    console.log(name, username, password);
+  };
   return (
     <ThemeProvider theme={theme}>
       <SignInWrapper>
         {token ? null : (
-          <Login
-            title={t("login")}
-            usernamePlaceholder={t("username")}
-            passwordPlaceholder={t("password")}
-            onLoginClick={handleLogin}
-            buttonText={t("login")}
-          />
+          <Tabs>
+            <TabPane
+              tab={
+                <span>
+                  <Icon type="login" />
+                  SignIn
+                </span>
+              }
+              key="1"
+            >
+              <Login
+                title={t("login")}
+                usernamePlaceholder={t("username")}
+                passwordPlaceholder={t("password")}
+                onLoginClick={handleLogin}
+                buttonText={t("login")}
+              />
+            </TabPane>
+            <TabPane
+              tab={
+                <span>
+                  <Icon type="team" />
+                  Register
+                </span>
+              }
+              key="2"
+            >
+              <Register
+                title={t("register")}
+                namePlaceholder={t("name")}
+                usernamePlaceholder={t("username")}
+                passwordPlaceholder={t("password")}
+                onRegisterClick={handleRegister}
+                buttonText={t("register")}
+              ></Register>
+            </TabPane>
+          </Tabs>
         )}
       </SignInWrapper>
     </ThemeProvider>
