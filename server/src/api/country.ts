@@ -1,7 +1,8 @@
-import express, { Request, Response, NextFunction, response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import axios from "axios";
 
 import { ICountry } from "../models/country";
+import { ResponseData } from "../helpers/responseStructure";
 
 const router = express.Router();
 
@@ -13,15 +14,9 @@ router.get(
         `https://restcountries.eu/rest/v2/name/${req.params.countryname}?fullText=true`
       );
       const response = data.data;
-      res.status(200).json(response);
+      res.status(200).json(ResponseData({ ...response }));
     } catch (err) {
-      next({
-        status: err.response.status,
-        message:
-          err.response.status === 404
-            ? "Country not found!!!"
-            : `Oops somting went wrong in ${req.url}`
-      });
+      next(err);
     }
   }
 );
@@ -52,7 +47,7 @@ router.get(
           //and this error cuses break all url request
         }
       }
-      res.status(200).json(listOfData);
+      res.status(200).json(ResponseData({ ...listOfData }));
     } catch (err) {
       next(err);
     }

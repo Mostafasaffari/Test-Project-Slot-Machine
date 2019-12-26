@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
 import express, { Request, Response, NextFunction } from "express";
 
+import { ResponseData } from "../helpers/responseStructure";
+
 const jwtKey = "Slot-Machine-$$Money";
 const jwtExpirySeconds = 30000;
 
@@ -19,11 +21,10 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
-      if (
-        !email ||
-        !password ||
-        !memoryUser.find(s => s.email === email && s.password === password)
-      ) {
+      const currentUser = memoryUser.find(
+        s => s.email === email && s.password === password
+      );
+      if (!email || !password || !currentUser) {
         return res
           .status(401)
           .json("email or password is incorrect!!")
@@ -33,7 +34,9 @@ router.post(
         algorithm: "HS256",
         expiresIn: jwtExpirySeconds
       });
-      res.status(200).json({ token });
+      res
+        .status(200)
+        .json(ResponseData({ token, email, coins: currentUser.coins }));
     } catch (err) {
       next(err);
     }
@@ -48,11 +51,11 @@ router.post(
       const checkDoubleEmail = memoryUser.find(s => s.email === email);
       if (!checkDoubleEmail) {
         memoryUser.push({ name, email, password, coins: 20 });
-        res.status(201).json(memoryUser);
+        res.status(201).json(ResponseData({ email, coins: 20 }));
       } else {
         res
           .status(409)
-          .json({ messaeg: "This email is already registered!!!" });
+          .json(ResponseData("This email is already registered!!!"));
       }
     } catch (err) {
       next(err);
