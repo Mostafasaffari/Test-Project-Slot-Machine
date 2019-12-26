@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import express, { Request, Response, NextFunction } from "express";
 
 import { ResponseData } from "../helpers/responseStructure";
+import { emailPattern, passwordPattern } from "../helpers/regexPatterns";
 
 const jwtKey = "Slot-Machine-$$Money";
 const jwtExpirySeconds = 30000;
@@ -24,7 +25,13 @@ router.post(
       const currentUser = memoryUser.find(
         s => s.email === email && s.password === password
       );
-      if (!email || !password || !currentUser) {
+      if (
+        !email ||
+        !password ||
+        !currentUser ||
+        !email.match(emailPattern) ||
+        !password.match(passwordPattern)
+      ) {
         return res
           .status(401)
           .json(ResponseData(null, "email or password is incorrect!!"))
@@ -48,14 +55,24 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { name, email, password } = req.body;
-      const checkDoubleEmail = memoryUser.find(s => s.email === email);
-      if (!checkDoubleEmail) {
-        memoryUser.push({ name, email, password, coins: 20 });
-        res.status(201).json(ResponseData({ email, coins: 20 }));
+      if (
+        email &&
+        password &&
+        name &&
+        email.match(emailPattern) &&
+        password.match(passwordPattern)
+      ) {
+        const checkDoubleEmail = memoryUser.find(s => s.email === email);
+        if (!checkDoubleEmail) {
+          memoryUser.push({ name, email, password, coins: 20 });
+          res.status(201).json(ResponseData({ email, coins: 20 }));
+        } else {
+          res
+            .status(409)
+            .json(ResponseData(null, "This email is already registered!!!"));
+        }
       } else {
-        res
-          .status(409)
-          .json(ResponseData(null, "This email is already registered!!!"));
+        res.status(400).json(ResponseData(null, "Please fill all fields!"));
       }
     } catch (err) {
       next(err);
