@@ -39,7 +39,7 @@ const SignIn: React.FC<IProps> = ({ history }) => {
         history.push("/app");
       }
     } catch (err) {
-      message.error(err, 5);
+      message.error(err.message, 5);
     }
   };
   const handleRegister = async (
@@ -53,7 +53,7 @@ const SignIn: React.FC<IProps> = ({ history }) => {
         handleLogin(username, password);
       }
     } catch (err) {
-      message.error(err, 5);
+      message.error(err.message, 5);
     }
   };
   return (

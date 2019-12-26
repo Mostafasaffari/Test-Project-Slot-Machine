@@ -10,12 +10,21 @@ const registerApi = async (input: IUserRegister) => {
     if (response && response.data && response.data.data) {
       return response.data.data;
     }
-    throw "";
+    throw new Error(
+      "Oops! Somting went wrong! Please contact to our support team!"
+    );
   } catch (err) {
     if (err && err.response && err.response.data) {
-      throw err.response.data.error;
+      if (err.response.status && err.response.status === 404) {
+        throw new Error(
+          "Plase check network status!! May be your internet connection has been lost!!"
+        );
+      }
+      throw new Error(err.response.data.error);
     }
-    throw "Oops! Somting went wrong! Please contact to our support team!";
+    throw new Error(
+      "Oops! Somting went wrong! Please contact to our support team!"
+    );
   }
 };
 
@@ -32,12 +41,21 @@ const signInApi = async (input: IUserSignIn) => {
     ) {
       return response.data.data.token;
     }
-    return "";
+    throw new Error(
+      "Oops! Somting went wrong! Please contact to our support team!"
+    );
   } catch (err) {
     if (err && err.response && err.response.data) {
-      throw err.response.data.error;
+      if (err.response.status && err.response.status === 404) {
+        throw new Error(
+          "Plase check network status!! May be your internet connection has been lost!!"
+        );
+      }
+      throw new Error(err.response.data.error);
     }
-    throw "Oops! Somting went wrong! Please contact to our support team!";
+    throw new Error(
+      "Oops! Somting went wrong! Please contact to our support team!"
+    );
   }
 };
 
