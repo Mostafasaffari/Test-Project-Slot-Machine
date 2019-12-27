@@ -7,6 +7,8 @@
   "register": "Register",
   "login": "Login",
   "dashboard": "Dashboard",
+  "filterButtonText": "Filter",
+  "filterByName": "Filter by name",
   "sidebarMenu": {
     "filterCountries": "Filter by countries",
     "countries": "List of countries",
@@ -15,5 +17,12 @@
   },
   "footer": {
     "copy": "Slot-Machine ©2019"
+  },
+  "country": {
+    "name": "Name",
+    "capital": "Capital",
+    "region": "Region",
+    "callingCode": "Calling Code",
+    "population": "Population"
   }
 }

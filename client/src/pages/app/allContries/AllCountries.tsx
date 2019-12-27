@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 import { ICountry } from "../../../entities/country";
 
@@ -14,6 +15,7 @@ const AllCountries: React.FC = () => {
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [filterCountries, setFilterCountries] = useState<ICountry[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     getListOfCountries();
@@ -32,29 +34,29 @@ const AllCountries: React.FC = () => {
   const tableRowKey = (record: ICountry, index: number) => record.numericCode;
   const columns = [
     {
-      title: "Name",
+      title: t("country.name"),
       dataIndex: "name",
       sorter: (a: ICountry, b: ICountry) => a.name.localeCompare(b.name),
       width: "30%"
     },
     {
-      title: "Capital",
+      title: t("country.capital"),
       dataIndex: "capital",
       sorter: (a: ICountry, b: ICountry) => a.capital.localeCompare(b.capital),
       width: "30%"
     },
     {
-      title: "Region",
+      title: t("country.region"),
       dataIndex: "region",
       width: "15%"
     },
     {
-      title: "Calling Code",
+      title: t("country.callingCode"),
       dataIndex: "callingCodes",
       width: "10%"
     },
     {
-      title: "Population",
+      title: t("country.population"),
       dataIndex: "population",
       width: "15%"
     }
@@ -71,7 +73,11 @@ const AllCountries: React.FC = () => {
   };
   return (
     <AllCountriesWrapper>
-      <Filter onSetFilter={handleSetFilter} filterTitle="Filter by name"/>
+      <Filter
+        onSetFilter={handleSetFilter}
+        filterTitle={t("filterByName")}
+        filterButtonText={t("filterButtonText")}
+      />
       <Table
         columns={columns}
         dataSource={filterCountries.length > 0 ? filterCountries : countries}

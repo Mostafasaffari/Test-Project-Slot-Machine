@@ -8,8 +8,13 @@ import FilterWrapper from "./filter.style";
 interface IProps {
   onSetFilter: (textFilter: string) => void;
   filterTitle: string;
+  filterButtonText: string;
 }
-const Filter: React.FC<IProps> = ({ onSetFilter, filterTitle }) => {
+const Filter: React.FC<IProps> = ({
+  onSetFilter,
+  filterTitle,
+  filterButtonText
+}) => {
   const [filterText, setFilterText] = useState<string>("");
   const handleFilter = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -23,7 +28,7 @@ const Filter: React.FC<IProps> = ({ onSetFilter, filterTitle }) => {
   return (
     <FilterWrapper onSubmit={handleFilter}>
       <Input onChange={handleChangeFilterText} placeholder={filterTitle} />
-      <Button htmlType="submit">Filter</Button>
+      <Button htmlType="submit">{filterButtonText}</Button>
     </FilterWrapper>
   );
 };
