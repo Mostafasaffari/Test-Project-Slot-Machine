@@ -18,7 +18,7 @@ const SlotMachine: React.FC = () => {
     }
 
     const inter = setInterval(() => {
-      const randomPosition = Math.floor(Math.random() * 9) * 64 * 2000;
+      const randomPosition = Math.floor(Math.random() * 10) * 64 * 2000;
       setPosition(randomPosition);
     }, 100);
     setIntervalSpin(inter);
