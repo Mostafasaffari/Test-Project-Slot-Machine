@@ -17,7 +17,7 @@ i18next
             expirationTime: 0, //7 * 24 * 60 * 60 * 1000,
             store: window.localStorage,
             versions: {
-              en: "1.1.0"
+              en: "1.2.0"
             }
           },
           {

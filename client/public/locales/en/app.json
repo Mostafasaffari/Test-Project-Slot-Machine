@@ -28,5 +28,8 @@
     "population": "Population",
     "flag": "Flag",
     "language": "Language"
+  },
+  "slotMachine": {
+    "spin": "Spin"
   }
 }
