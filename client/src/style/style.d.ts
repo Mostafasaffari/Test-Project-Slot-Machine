@@ -30,7 +30,7 @@ interface ISize {
 declare module "styled-components" {
   export type ThemeName = "main" | "special";
   export interface DefaultTheme {
-    ownColorTheme: string;// use for choosing theme button
+    ownColorTheme: string; // use for choosing theme button
     borderRadius: {
       main: string;
       button: string;
@@ -54,6 +54,7 @@ declare module "styled-components" {
         footer: string;
         sideBar: string;
         hoverLight: string;
+        box: string;
       };
       border: {
         main: string;

@@ -18,7 +18,7 @@ import Footer from "../../../components/ui-kit/layout/footer";
 
 import AppRouter from "../RestrictedRouter";
 
-import AppWrapper from "./layout.style";
+import LayoutWrapper from "./layout.style";
 
 interface IProps extends RouteComponentProps {}
 const App: React.FC<IProps> = ({ match, history }) => {
@@ -84,9 +84,9 @@ const App: React.FC<IProps> = ({ match, history }) => {
             signOutUser={handleSignOutUser}
           />
           <Content>
-            <AppWrapper data-test="wrapper">
+            <LayoutWrapper data-test="wrapper">
               <AppRouter url={url} />
-            </AppWrapper>
+            </LayoutWrapper>
           </Content>
           <Footer>{t("footer.copy")}</Footer>
         </Layout>

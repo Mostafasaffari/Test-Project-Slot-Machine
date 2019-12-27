@@ -69,7 +69,8 @@ const theme: DefaultTheme = {
       contentLayout: "#f0f2f5",
       footer: "#fefefe",
       sideBar: "#001529",
-      hoverLight: "rgba(255, 255, 255, 0.2)"
+      hoverLight: "rgba(255, 255, 255, 0.2)",
+      box:"#ffffff"
     },
     border: {
       main: "#f77062",

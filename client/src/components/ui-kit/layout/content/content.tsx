@@ -1,5 +1,5 @@
 import Layout from "../";
-import ContentStyle from "./constent.style";
+import ContentStyle from "./content.style";
 
 const { Content } = Layout;
 
