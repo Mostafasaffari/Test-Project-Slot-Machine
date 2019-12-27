@@ -6,7 +6,5 @@ export default (
   res: Response,
   next: NextFunction
 ) => {
-  res
-    .status(500)
-    .json({ message: err.message ? err.message : "Something went wrong!" });
+  res.status(500).json(err.message ? err.message : "Something went wrong!");
 };

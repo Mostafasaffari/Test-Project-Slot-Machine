@@ -9,6 +9,8 @@
   "dashboard": "Dashboard",
   "filterButtonText": "Filter",
   "filterByName": "Filter by name",
+  "searchButtonText": "Search",
+  "searchByName": "Search by name",
   "sidebarMenu": {
     "filterCountries": "Filter by countries",
     "countries": "List of countries",
@@ -23,6 +25,8 @@
     "capital": "Capital",
     "region": "Region",
     "callingCode": "Calling Code",
-    "population": "Population"
+    "population": "Population",
+    "flag": "Flag",
+    "language": "Language"
   }
 }
