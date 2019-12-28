@@ -18,18 +18,12 @@ const SlotMachine: React.FC = () => {
   const { t } = useTranslation();
 
   const runSpin = async () => {
-    // if (intervalSpin) {
-    //   clearInterval(intervalSpin);
-    //   setIntervalSpin(0);
-    //   return;
-    // }
     const inter = setInterval(() => {
       const randomPosition = Math.floor(Math.random() * 10) * 64 * 2000;
       setPosition(randomPosition);
     }, 100);
     setIntervalSpin(inter);
     const machineData: ISpin = await spinApi();
-    console.log(machineData);
     setPositionReel1(calculatePositionOfIcon(machineData.Reel1));
     setPositionReel2(calculatePositionOfIcon(machineData.Reel2));
     setPositionReel3(calculatePositionOfIcon(machineData.Reel3));
@@ -37,7 +31,7 @@ const SlotMachine: React.FC = () => {
       clearInterval(inter);
       setIntervalSpin(0);
       setPosition(0);
-    }, 3000);
+    }, 2000);
   };
   return (
     <SelotMachineWrapper>

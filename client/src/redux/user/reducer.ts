@@ -1,8 +1,8 @@
 import { IUserState, UserActionTypes, SIGNIN, SIGNOUT } from "./types";
-import { cookieStore } from "../../helpers/localStorage";
+import { localStore } from "../../helpers/localStorage";
 
 const initialState: IUserState = {
-  token: cookieStore.get("token") || "",
+  token: localStore.get("token") || "",
   username: ""
 };
 
@@ -12,7 +12,7 @@ const userReducer = (
 ): IUserState => {
   switch (action.type) {
     case SIGNIN:
-      cookieStore.set("token", action.token);
+      localStore.set("token", action.token);
       return {
         ...state,
         token: action.token,
@@ -20,7 +20,7 @@ const userReducer = (
       };
 
     case SIGNOUT:
-      cookieStore.clear("token");
+      localStore.clear("token");
       return {
         ...initialState,
         token: ""

@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import express, { Request, Response, NextFunction } from "express";
+import express, { Request, Response, NextFunction, response } from "express";
 
 import { ResponseData } from "../helpers/responseStructure";
 import { emailPattern, passwordPattern } from "../helpers/regexPatterns";
@@ -80,7 +80,44 @@ router.post(
   }
 );
 
-router.get("/users", (req: Request, res: Response, next: NextFunction) => {
-  res.status(200).json(memoryUser);
-});
+router.post(
+  "/getUserInfo",
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const token = req.headers.authorization;
+      if (!token) {
+        return res.status(401).json(ResponseData(null, "Please signIn!!"));
+      }
+      try {
+        const jwtObj: any = jwt.verify(token, jwtKey);
+        const user = memoryUser.find(s => s.email === jwtObj.email);
+        if (user) {
+          return res
+            .status(200)
+            .json(
+              ResponseData({
+                email: user.email,
+                name: user.name,
+                coins: user.coins
+              })
+            );
+        } else {
+          return res
+            .status(401)
+            .json(ResponseData(null, "Please signIn to system!!"));
+        }
+      } catch (e) {
+        if (e instanceof jwt.JsonWebTokenError) {
+          return res
+            .status(401)
+            .json(ResponseData(null, "Please signIn to system!!"));
+        }
+        return res.status(400).json(ResponseData(null, "Bad Request!!!"));
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+);
+
 export default router;

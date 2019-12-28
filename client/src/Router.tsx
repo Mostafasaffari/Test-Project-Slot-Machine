@@ -3,7 +3,7 @@ import { Provider } from "react-redux";
 import { ConnectedRouter } from "connected-react-router";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import { cookieStore } from "./helpers/localStorage";
+import { localStore } from "./helpers/localStorage";
 
 import { history, store } from "./redux/store";
 
@@ -37,7 +37,7 @@ const RestrictedRoute: React.FC<IPropsRestrictRoute> = ({
   component: Component,
   ...rest
 }) => {
-  const isLoggedIn = !!cookieStore.get("token");
+  const isLoggedIn = !!localStore.get("token");
 
   return (
     <Route

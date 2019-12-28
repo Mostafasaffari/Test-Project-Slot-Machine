@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { RouteComponentProps } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { ThemeProvider, DefaultTheme } from "styled-components";
 
 import { INavigationSidebar } from "../../../interfaces/dataListInterfaces";
+
+import { getUserInfoApi } from "../../../services/users";
 
 import { AppState } from "../../../redux/store";
 import userActions from "../../../redux/user/actions";
@@ -13,8 +15,9 @@ import appSettingActions from "../../../redux/appSetting/actions";
 import AppBar from "../../../components/appBar";
 import SideBar from "../../../components/sideBar";
 import Layout from "../../../components/ui-kit/layout";
-import Content from "../../../components/ui-kit/layout/content";
+import message from "../../../components/ui-kit/message";
 import Footer from "../../../components/ui-kit/layout/footer";
+import Content from "../../../components/ui-kit/layout/content";
 
 import AppRouter from "../RestrictedRouter";
 
@@ -28,6 +31,9 @@ const App: React.FC<IProps> = ({ match, history }) => {
   const dispatch = useDispatch();
   const { url } = match;
 
+  useEffect(() => {
+    getUserInfo();
+  }, []);
   const handleChangeTheme = (theme: DefaultTheme) => {
     dispatch(appSettingActions.changeTheme(theme));
   };
@@ -39,6 +45,16 @@ const App: React.FC<IProps> = ({ match, history }) => {
   const handleSignOutUser = () => {
     dispatch(userActions.signOut());
     history.push("/");
+  };
+
+  const getUserInfo = async () => {
+    try {
+      const user = await getUserInfoApi();
+      console.log(user);
+    } catch (err) {
+      message.error(err.message, 5);
+      handleSignOutUser();
+    }
   };
 
   const navigationSidebarData: INavigationSidebar[] = [
