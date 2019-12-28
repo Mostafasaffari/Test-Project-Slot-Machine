@@ -1,5 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
+
 import { ResponseData } from "../helpers/responseStructure";
+import { decryptJwt } from "../helpers/jwt";
+import { findUserByEmail, IUser } from "../helpers/userMemory";
 
 const router = express.Router();
 
@@ -7,6 +10,25 @@ router.post(
   "/spin/",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
+      const token = req.headers.authorization;
+      let user: IUser;
+      if (!token) {
+        return res.status(401).json(ResponseData(null, "Please signIn!!"));
+      }
+      try {
+        const jwtObj = decryptJwt(token);
+        user = findUserByEmail(jwtObj.email);
+        if (!user) {
+          return res
+            .status(401)
+            .json(ResponseData(null, "Please signIn to system!!"));
+        } else {
+          user.coins--;
+        }
+      } catch (e) {
+        return res.status(400).json(ResponseData(null, "Bad Request!!!"));
+      }
+
       const Reel1: string[] = [
         "cherry",
         "lemon",
@@ -49,7 +71,10 @@ router.post(
         ResponseData({
           Reel1: Reel1[randomNumberReel1],
           Reel2: Reel2[randomNumberReel2],
-          Reel3: Reel3[randomNumberReel3]
+          Reel3: Reel3[randomNumberReel3],
+          coins: user.coins,
+          email: user.email,
+          name: user.name
         })
       );
     } catch (err) {
@@ -57,5 +82,13 @@ router.post(
     }
   }
 );
+
+export type Reel = "cherry" | "lemon" | "apple" | "banana";
+
+const calculateCoins = (reel1: Reel, reel2: Reel, reel3: Reel): number => {
+  if (reel1 === "cherry" && reel2 === "cherry" && reel3 === "cherry") {
+    return 50;
+  }
+};
 
 export default router;

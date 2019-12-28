@@ -34,7 +34,7 @@ const App: React.FC<IProps> = ({ match, history }) => {
 
   useEffect(() => {
     getUserInfo();
-  });
+  },[]);
 
   const handleChangeTheme = (theme: DefaultTheme) => {
     dispatch(appSettingActions.changeTheme(theme));

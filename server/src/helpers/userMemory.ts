@@ -1,8 +1,8 @@
-interface IUser {
+export interface IUser {
   name: string;
   password: string;
   email: string;
-  coins: Number;
+  coins: number;
 }
 let memoryUser: IUser[] = [];
 
