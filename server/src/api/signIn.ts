@@ -1,11 +1,8 @@
-import jwt from "jsonwebtoken";
-import express, { Request, Response, NextFunction, response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 
+import { createJwt, decryptJwt } from "../helpers/jwt";
 import { ResponseData } from "../helpers/responseStructure";
 import { emailPattern, passwordPattern } from "../helpers/regexPatterns";
-
-const jwtKey = "Slot-Machine-$$Money";
-const jwtExpirySeconds = 30000;
 
 const router = express.Router();
 
@@ -37,10 +34,7 @@ router.post(
           .json(ResponseData(null, "email or password is incorrect!!"))
           .end();
       }
-      const token = jwt.sign({ email }, jwtKey, {
-        algorithm: "HS256",
-        expiresIn: jwtExpirySeconds
-      });
+      const token = createJwt(email);
       return res
         .status(200)
         .json(ResponseData({ token, email, coins: currentUser.coins }));
@@ -89,7 +83,7 @@ router.post(
         return res.status(401).json(ResponseData(null, "Please signIn!!"));
       }
       try {
-        const jwtObj: any = jwt.verify(token, jwtKey);
+        const jwtObj = decryptJwt(token);
         const user = memoryUser.find(s => s.email === jwtObj.email);
         if (user) {
           return res.status(200).json(
@@ -105,11 +99,6 @@ router.post(
             .json(ResponseData(null, "Please signIn to system!!"));
         }
       } catch (e) {
-        if (e instanceof jwt.JsonWebTokenError) {
-          return res
-            .status(401)
-            .json(ResponseData(null, "Please signIn to system!!"));
-        }
         return res.status(400).json(ResponseData(null, "Bad Request!!!"));
       }
     } catch (err) {
