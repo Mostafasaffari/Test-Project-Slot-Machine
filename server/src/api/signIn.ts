@@ -3,25 +3,20 @@ import express, { Request, Response, NextFunction } from "express";
 import { createJwt, decryptJwt } from "../helpers/jwt";
 import { ResponseData } from "../helpers/responseStructure";
 import { emailPattern, passwordPattern } from "../helpers/regexPatterns";
+import {
+  findUserByEmail,
+  addUser,
+  findUserByEmailAndPassword
+} from "../helpers/userMemory";
 
 const router = express.Router();
-
-interface IUser {
-  name: string;
-  password: string;
-  email: string;
-  coins: Number;
-}
-let memoryUser: IUser[] = [];
 
 router.post(
   "/signIn",
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { email, password } = req.body;
-      const currentUser = memoryUser.find(
-        s => s.email === email && s.password === password
-      );
+      const currentUser = findUserByEmailAndPassword(email, password);
       if (
         !email ||
         !password ||
@@ -56,9 +51,9 @@ router.post(
         email.match(emailPattern) &&
         password.match(passwordPattern)
       ) {
-        const checkDoubleEmail = memoryUser.find(s => s.email === email);
+        const checkDoubleEmail = findUserByEmail(email);
         if (!checkDoubleEmail) {
-          memoryUser.push({ name, email, password, coins: 20 });
+          addUser({ name, email, password, coins: 20 });
           res.status(201).json(ResponseData({ email, coins: 20 }));
         } else {
           res
@@ -84,7 +79,7 @@ router.post(
       }
       try {
         const jwtObj = decryptJwt(token);
-        const user = memoryUser.find(s => s.email === jwtObj.email);
+        const user = findUserByEmail(jwtObj.email);
         if (user) {
           return res.status(200).json(
             ResponseData({
