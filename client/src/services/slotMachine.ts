@@ -1,6 +1,6 @@
 import axios from "../helpers/apiHelper";
 
-const slotSpinApi = async () => {
+const spinApi = async () => {
   try {
     const response = await axios.post(`/slot/spin`);
     if (response && response.data && response.data.data) {
@@ -28,4 +28,4 @@ const slotSpinApi = async () => {
   }
 };
 
-export { slotSpinApi };
+export { spinApi };

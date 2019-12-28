@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import { ResponseData } from "../helpers/responseStructure";
 
 const router = express.Router();
 
@@ -44,11 +45,13 @@ router.post(
       const randomNumberReel3 =
         Math.floor(Math.random() * Reel3.length - 1) + 1;
 
-      res.status(200).json({
-        Reel1: Reel1[randomNumberReel1],
-        Reel2: Reel2[randomNumberReel2],
-        Reel3: Reel3[randomNumberReel3]
-      });
+      res.status(200).json(
+        ResponseData({
+          Reel1: Reel1[randomNumberReel1],
+          Reel2: Reel2[randomNumberReel2],
+          Reel3: Reel3[randomNumberReel3]
+        })
+      );
     } catch (err) {
       next(err);
     }
