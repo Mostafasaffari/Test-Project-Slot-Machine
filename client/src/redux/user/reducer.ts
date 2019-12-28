@@ -1,9 +1,16 @@
-import { IUserState, UserActionTypes, SIGNIN, SIGNOUT } from "./types";
+import {
+  IUserState,
+  UserActionTypes,
+  SIGNIN,
+  SIGNOUT,
+  SET_USER_INFO
+} from "./types";
 import { localStore } from "../../helpers/localStorage";
 
 const initialState: IUserState = {
   token: localStore.get("token") || "",
-  username: ""
+  username: "",
+  coins: 0
 };
 
 const userReducer = (
@@ -16,7 +23,8 @@ const userReducer = (
       return {
         ...state,
         token: action.token,
-        username: action.username
+        username: action.username,
+        coins: action.coins
       };
 
     case SIGNOUT:
@@ -24,6 +32,12 @@ const userReducer = (
       return {
         ...initialState,
         token: ""
+      };
+    case SET_USER_INFO:
+      return {
+        ...state,
+        username: action.username,
+        coins: action.coins
       };
     default:
       return state;

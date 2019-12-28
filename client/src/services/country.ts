@@ -6,7 +6,6 @@ const getAllCountriesApi = async (): Promise<ICountry[]> => {
   try {
     axios.defaults.baseURL = "https://restcountries.eu/rest/v2";
     const response = await axios.get<ICountry[]>(`/all`);
-    console.log(response);
     if (response && response.data && response.data) {
       return response.data;
     }

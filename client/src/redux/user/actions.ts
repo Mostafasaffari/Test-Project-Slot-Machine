@@ -1,13 +1,19 @@
-import { IUserActions, SIGNIN, SIGNOUT } from "./types";
+import { IUserActions, SIGNIN, SIGNOUT, SET_USER_INFO } from "./types";
 
 const actions: IUserActions = {
-  signIn: (token, username) => ({
+  signIn: (token, username, coins) => ({
     type: SIGNIN,
     token,
-    username
+    username,
+    coins
   }),
   signOut: () => ({
     type: SIGNOUT
+  }),
+  setUserInfo: (username, coins) => ({
+    type: SET_USER_INFO,
+    username,
+    coins
   })
 };
 

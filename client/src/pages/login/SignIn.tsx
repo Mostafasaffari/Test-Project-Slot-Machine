@@ -37,7 +37,7 @@ const SignIn: React.FC<IProps> = ({ history }) => {
     try {
       const response = await signInApi({ email: username, password });
       if (response) {
-        dispatch(userActions.signIn(response, username));
+        dispatch(userActions.signIn(response.token, username, response.coins));
         history.push("/app");
       }
     } catch (err) {

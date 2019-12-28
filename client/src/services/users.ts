@@ -2,6 +2,8 @@ import axios from "../helpers/apiHelper";
 
 import { IUserRegister, IUserSignIn } from "../entities/user";
 
+import { localStore } from "../helpers/localStorage";
+
 const registerApi = async (input: IUserRegister) => {
   try {
     const response = await axios.post(`/user/register`, {
@@ -39,7 +41,7 @@ const signInApi = async (input: IUserSignIn) => {
       response.data.data &&
       response.data.data.token
     ) {
-      return response.data.data.token;
+      return response.data.data;
     }
     throw new Error(
       "Oops! Somting went wrong! Please contact to our support team!"
@@ -63,12 +65,9 @@ const signInApi = async (input: IUserSignIn) => {
 
 const getUserInfoApi = async () => {
   try {
+    axios.defaults.headers.common["Authorization"] = localStore.get("token");
     const response = await axios.post(`/user/getUserInfo`);
-    if (
-      response &&
-      response.data &&
-      response.data.data
-    ) {
+    if (response && response.data && response.data.data) {
       return response.data.data;
     }
     throw new Error(

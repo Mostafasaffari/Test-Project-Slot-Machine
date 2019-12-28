@@ -34,6 +34,7 @@ const App: React.FC<IProps> = ({ match, history }) => {
   useEffect(() => {
     getUserInfo();
   }, []);
+
   const handleChangeTheme = (theme: DefaultTheme) => {
     dispatch(appSettingActions.changeTheme(theme));
   };
@@ -50,7 +51,7 @@ const App: React.FC<IProps> = ({ match, history }) => {
   const getUserInfo = async () => {
     try {
       const user = await getUserInfoApi();
-      console.log(user);
+      dispatch(userActions.setUserInfo(user.email, user.coins));
     } catch (err) {
       message.error(err.message, 5);
       handleSignOutUser();

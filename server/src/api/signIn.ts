@@ -41,7 +41,7 @@ router.post(
         algorithm: "HS256",
         expiresIn: jwtExpirySeconds
       });
-      res
+      return res
         .status(200)
         .json(ResponseData({ token, email, coins: currentUser.coins }));
     } catch (err) {
@@ -92,15 +92,13 @@ router.post(
         const jwtObj: any = jwt.verify(token, jwtKey);
         const user = memoryUser.find(s => s.email === jwtObj.email);
         if (user) {
-          return res
-            .status(200)
-            .json(
-              ResponseData({
-                email: user.email,
-                name: user.name,
-                coins: user.coins
-              })
-            );
+          return res.status(200).json(
+            ResponseData({
+              email: user.email,
+              name: user.name,
+              coins: user.coins
+            })
+          );
         } else {
           return res
             .status(401)
