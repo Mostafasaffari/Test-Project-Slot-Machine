@@ -28,12 +28,13 @@ const App: React.FC<IProps> = ({ match, history }) => {
   const [collapseSideBar, setCollapseSideBar] = useState(false);
   const { t } = useTranslation();
   const theme = useSelector((state: AppState) => state.AppSetting.theme);
+  const userInfo = useSelector((state: AppState) => state.User);
   const dispatch = useDispatch();
   const { url } = match;
 
   useEffect(() => {
     getUserInfo();
-  }, []);
+  });
 
   const handleChangeTheme = (theme: DefaultTheme) => {
     dispatch(appSettingActions.changeTheme(theme));
@@ -99,6 +100,7 @@ const App: React.FC<IProps> = ({ match, history }) => {
             toggle={handleToggleSideBar}
             onChangeTheme={handleChangeTheme}
             signOutUser={handleSignOutUser}
+            coins={userInfo.coins}
           />
           <Content>
             <LayoutWrapper data-test="wrapper">

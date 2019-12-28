@@ -13,12 +13,14 @@ interface IProps {
   collapsed: boolean;
   onChangeTheme: (theme: DefaultTheme) => void;
   signOutUser: () => void;
+  coins: number;
 }
 const AppBar: React.FC<IProps> = ({
   toggle,
   collapsed,
   onChangeTheme,
-  signOutUser
+  signOutUser,
+  coins
 }) => {
   return (
     <AppBarWrapper>
@@ -30,6 +32,9 @@ const AppBar: React.FC<IProps> = ({
         />
         <div className="appbar__header-right">
           <ChangeTheme onChangeTheme={onChangeTheme} />
+          <div className="appbar__header-right--coins">
+            coins: {coins}
+          </div>
           <UserInfo signOutUser={signOutUser} />
         </div>
       </Header>
