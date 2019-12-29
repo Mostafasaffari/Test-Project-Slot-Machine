@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Home from "./home";
-import AllCountries from "./allContries";
+import AllCountries from "./allCountries";
 import InfoCountry from "./infoCountry/InfoCountry";
 import SlotMachine from "./slotMachine/SlotMachine";
 

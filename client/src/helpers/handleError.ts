@@ -1,5 +1,3 @@
-import { IErrorHandle } from "../interfaces/errorHandle";
-
 const handleError = (err: any) => {
   if (err && err.response && err.response.data) {
     if (
