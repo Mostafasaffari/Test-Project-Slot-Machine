@@ -8,6 +8,7 @@ import { spinApi } from "../../../services/slotMachine";
 
 import userActions from "../../../redux/user/actions";
 
+import Spinner from "../../../components/spinner";
 import Button from "../../../components/ui-kit/button";
 import message from "../../../components/ui-kit/message";
 
@@ -49,33 +50,21 @@ const SlotMachine: React.FC = () => {
         <Button onClick={runSpin}>{t("slotMachine.spin")}</Button>
       </div>
       <div className="slotmachine__spin">
-        <div
-          className={[
-            "slotmachine__spin--icon",
-            intervalSpin === 0 && positionReel1 === -1
-              ? "slotmachine__spin--question"
-              : ""
-          ].join(" ")}
-          style={{ backgroundPositionY: `${position || positionReel1}px` }}
-        ></div>
-        <div
-          className={[
-            "slotmachine__spin--icon",
-            intervalSpin === 0 && positionReel2 === -1
-              ? "slotmachine__spin--question"
-              : ""
-          ].join(" ")}
-          style={{ backgroundPositionY: `${position || positionReel2}px` }}
-        ></div>
-        <div
-          className={[
-            "slotmachine__spin--icon",
-            intervalSpin === 0 && positionReel3 === -1
-              ? "slotmachine__spin--question"
-              : ""
-          ].join(" ")}
-          style={{ backgroundPositionY: `${position || positionReel3}px` }}
-        ></div>
+        <Spinner
+          intervalSpin={intervalSpin}
+          positionReel={positionReel1}
+          randomPosition={position}
+        />
+        <Spinner
+          intervalSpin={intervalSpin}
+          positionReel={positionReel2}
+          randomPosition={position}
+        />
+        <Spinner
+          intervalSpin={intervalSpin}
+          positionReel={positionReel3}
+          randomPosition={position}
+        />
       </div>
     </SelotMachineWrapper>
   );
