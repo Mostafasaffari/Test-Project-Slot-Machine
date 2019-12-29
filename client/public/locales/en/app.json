@@ -31,5 +31,8 @@
   },
   "slotMachine": {
     "spin": "Spin"
+  },
+  "errors": {
+    "countryNotFound": "Country not found!!"
   }
 }

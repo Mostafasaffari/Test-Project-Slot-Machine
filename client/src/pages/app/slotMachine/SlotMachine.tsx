@@ -9,6 +9,7 @@ import { spinApi } from "../../../services/slotMachine";
 import userActions from "../../../redux/user/actions";
 
 import Button from "../../../components/ui-kit/button";
+import message from "../../../components/ui-kit/message";
 
 import SelotMachineWrapper from "./slotMachine.style";
 
@@ -22,21 +23,25 @@ const SlotMachine: React.FC = () => {
   const dispatch = useDispatch();
 
   const runSpin = async () => {
-    const inter = setInterval(() => {
-      const randomPosition = Math.floor(Math.random() * 10) * 64 * 2000;
-      setPosition(randomPosition);
-    }, 100);
-    setIntervalSpin(inter);
-    const machineData: ISpin = await spinApi();
-    setPositionReel1(calculatePositionOfIcon(machineData.Reel1));
-    setPositionReel2(calculatePositionOfIcon(machineData.Reel2));
-    setPositionReel3(calculatePositionOfIcon(machineData.Reel3));
-    setTimeout(() => {
-      clearInterval(inter);
-      setIntervalSpin(0);
-      setPosition(0);
-      dispatch(userActions.setUserCoin(machineData.coins));
-    }, 2000);
+    try {
+      const inter = setInterval(() => {
+        const randomPosition = Math.floor(Math.random() * 10) * 64 * 2000;
+        setPosition(randomPosition);
+      }, 100);
+      setIntervalSpin(inter);
+      const machineData: ISpin = await spinApi();
+      setPositionReel1(calculatePositionOfIcon(machineData.Reel1));
+      setPositionReel2(calculatePositionOfIcon(machineData.Reel2));
+      setPositionReel3(calculatePositionOfIcon(machineData.Reel3));
+      setTimeout(() => {
+        clearInterval(inter);
+        setIntervalSpin(0);
+        setPosition(0);
+        dispatch(userActions.setUserCoin(machineData.coins));
+      }, 2000);
+    } catch (err) {
+      message.error(err.message);
+    }
   };
   return (
     <SelotMachineWrapper>

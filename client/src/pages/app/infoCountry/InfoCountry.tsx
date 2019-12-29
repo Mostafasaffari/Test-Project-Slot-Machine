@@ -23,8 +23,8 @@ const InfoCountry = () => {
         const response = await getCountryByNameApi(filter);
         setCountryData(response);
         setLoading(false);
-      } catch {
-        message.error("Country Not found!!", 5);
+      } catch (err) {
+        message.error(err.message, 5);
         setCountryData(undefined);
         setLoading(false);
       }

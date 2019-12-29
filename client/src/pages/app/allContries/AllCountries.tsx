@@ -66,7 +66,8 @@ const AllCountries: React.FC = () => {
       const newList = countries.filter(s =>
         s.name.toLowerCase().includes(filter.toLowerCase())
       );
-      setFilterCountries(newList);
+      if (newList.length > 0) setFilterCountries(newList);
+      else message.error(t("errors.countryNotFound"));
     } else {
       setFilterCountries([]);
     }
