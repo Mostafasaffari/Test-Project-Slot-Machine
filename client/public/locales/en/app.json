@@ -11,6 +11,7 @@
   "filterByName": "Filter by name",
   "searchButtonText": "Search",
   "searchByName": "Search by name",
+  "newTag": "Add new country",
   "sidebarMenu": {
     "filterCountries": "Filter by countries",
     "countries": "List of countries",
