@@ -4,6 +4,7 @@ const TagFilterWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 100%;
+  margin:${props => props.theme.sizes.spacing.l4};
   & .tag__filter__newtag {
     &--addtag {
       border: 1px dashed;

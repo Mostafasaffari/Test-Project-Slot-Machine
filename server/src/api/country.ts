@@ -48,7 +48,7 @@ router.get(
           //and this error cuses break all url request
         }
       }
-      return res.status(200).json(ResponseData({ ...listOfData }));
+      return res.status(200).json(ResponseData([...listOfData]));
     } catch (err) {
       next(err);
     }

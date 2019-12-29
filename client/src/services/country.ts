@@ -23,4 +23,14 @@ const getCountryByNameApi = async (name: string): Promise<ICountry> => {
   }
 };
 
-export { getAllCountriesApi, getCountryByNameApi };
+const getCountryByNamesApi = async (names: string[]): Promise<ICountry[]> => {
+  try {
+    const response = await axios.get(
+      `/country/names/[${names.map(name => `"${name}"`)}]`
+    );
+    return response.data.data;
+  } catch (err) {
+    return handleError(err);
+  }
+};
+export { getAllCountriesApi, getCountryByNameApi, getCountryByNamesApi };
