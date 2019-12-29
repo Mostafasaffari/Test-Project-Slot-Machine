@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useSelector, useDispatch } from "react-redux";
 
 import { ISpin, Reel } from "../../../entities/slotMachine";
 
 import { spinApi } from "../../../services/slotMachine";
+
+import userActions from "../../../redux/user/actions";
 
 import Button from "../../../components/ui-kit/button";
 
@@ -16,6 +19,7 @@ const SlotMachine: React.FC = () => {
   const [positionReel3, setPositionReel3] = useState<number>(-1);
   const [intervalSpin, setIntervalSpin] = useState<number>(0);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
 
   const runSpin = async () => {
     const inter = setInterval(() => {
@@ -31,6 +35,7 @@ const SlotMachine: React.FC = () => {
       clearInterval(inter);
       setIntervalSpin(0);
       setPosition(0);
+      dispatch(userActions.setUserCoin(machineData.coins));
     }, 2000);
   };
   return (
@@ -78,7 +83,7 @@ const calculatePositionOfIcon = (input: Reel): number => {
     case "banana":
       return 0;
     case "cherry":
-      return 256;
+      return 192;
     case "lemon":
       return 128;
     default:

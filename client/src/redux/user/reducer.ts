@@ -3,7 +3,8 @@ import {
   UserActionTypes,
   SIGNIN,
   SIGNOUT,
-  SET_USER_INFO
+  SET_USER_INFO,
+  SET_USER_COIN
 } from "./types";
 import { localStore } from "../../helpers/localStorage";
 
@@ -37,6 +38,11 @@ const userReducer = (
       return {
         ...state,
         username: action.username,
+        coins: action.coins
+      };
+    case SET_USER_COIN:
+      return {
+        ...state,
         coins: action.coins
       };
     default:

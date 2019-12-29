@@ -6,6 +6,8 @@ import { findUserByEmail, IUser } from "../helpers/userMemory";
 
 const router = express.Router();
 
+type Reel = "cherry" | "lemon" | "apple" | "banana";
+
 router.post(
   "/spin/",
   async (req: Request, res: Response, next: NextFunction) => {
@@ -29,7 +31,7 @@ router.post(
         return res.status(400).json(ResponseData(null, "Bad Request!!!"));
       }
 
-      const Reel1: string[] = [
+      const Reel1: Reel[] = [
         "cherry",
         "lemon",
         "apple",
@@ -39,7 +41,7 @@ router.post(
         "lemon",
         "lemon"
       ];
-      const Reel2: string[] = [
+      const Reel2: Reel[] = [
         "lemon",
         "apple",
         "lemon",
@@ -49,7 +51,7 @@ router.post(
         "banana",
         "lemon"
       ];
-      const Reel3: string[] = [
+      const Reel3: Reel[] = [
         "lemon",
         "apple",
         "lemon",
@@ -67,6 +69,14 @@ router.post(
       const randomNumberReel3 =
         Math.floor(Math.random() * Reel3.length - 1) + 1;
 
+      const winCoins = calculateCoins([
+        Reel1[randomNumberReel1],
+        Reel2[randomNumberReel2],
+        Reel3[randomNumberReel3]
+      ]);
+
+      user.coins += winCoins;
+      console.log(winCoins, "wincoin");
       res.status(200).json(
         ResponseData({
           Reel1: Reel1[randomNumberReel1],
@@ -83,12 +93,21 @@ router.post(
   }
 );
 
-export type Reel = "cherry" | "lemon" | "apple" | "banana";
+const calculateCoins = (input: [Reel, Reel, Reel]): number => {
+  const countOfCherry = input.filter(s => s === "cherry").length;
+  const countOfLemon = input.filter(s => s === "lemon").length;
+  const countOfBanana = input.filter(s => s === "banana").length;
+  const countOfApple = input.filter(s => s === "apple").length;
 
-const calculateCoins = (reel1: Reel, reel2: Reel, reel3: Reel): number => {
-  if (reel1 === "cherry" && reel2 === "cherry" && reel3 === "cherry") {
-    return 50;
-  }
+  console.log(input, countOfCherry, countOfLemon, countOfBanana, countOfApple);
+  if (countOfCherry === 3) return 50;
+  else if (countOfCherry === 2) return 40;
+  else if (countOfApple === 3) return 20;
+  else if (countOfApple === 2) return 10;
+  else if (countOfBanana === 3) return 15;
+  else if (countOfBanana === 2) return 5;
+  else if (countOfLemon === 3) return 3;
+  else return 0;
 };
 
 export default router;
