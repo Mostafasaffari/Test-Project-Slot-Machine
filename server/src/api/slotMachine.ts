@@ -1,8 +1,8 @@
 import express, { Request, Response, NextFunction } from "express";
 
+import { IUser } from "../helpers/userMemory";
+import { authenticateJwt } from "../helpers/jwt";
 import { ResponseData } from "../helpers/responseStructure";
-import { decryptJwt } from "../helpers/jwt";
-import { findUserByEmail, IUser } from "../helpers/userMemory";
 
 const router = express.Router();
 
@@ -13,23 +13,11 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const token = req.headers.authorization;
-      let user: IUser;
-      if (!token) {
+      const user: IUser = authenticateJwt(token);
+      if (!user) {
         return res.status(401).json(ResponseData(null, "Please signIn!!"));
       }
-      try {
-        const jwtObj = decryptJwt(token);
-        user = findUserByEmail(jwtObj.email);
-        if (!user) {
-          return res
-            .status(401)
-            .json(ResponseData(null, "Please signIn to system!!"));
-        } else {
-          user.coins--;
-        }
-      } catch (e) {
-        return res.status(400).json(ResponseData(null, "Bad Request!!!"));
-      }
+      user.coins--;
 
       const Reel1: Reel[] = [
         "cherry",
@@ -76,7 +64,6 @@ router.post(
       ]);
 
       user.coins += winCoins;
-      console.log(winCoins, "wincoin");
       res.status(200).json(
         ResponseData({
           Reel1: Reel1[randomNumberReel1],
@@ -94,20 +81,22 @@ router.post(
 );
 
 const calculateCoins = (input: [Reel, Reel, Reel]): number => {
-  const countOfCherry = input.filter(s => s === "cherry").length;
   const countOfLemon = input.filter(s => s === "lemon").length;
-  const countOfBanana = input.filter(s => s === "banana").length;
-  const countOfApple = input.filter(s => s === "apple").length;
+  if (countOfLemon === 3) return 3;
 
-  console.log(input, countOfCherry, countOfLemon, countOfBanana, countOfApple);
+  const countOfBanana = input.filter(s => s === "banana").length;
+  if (countOfBanana === 2) return 5;
+  if (countOfBanana === 3) return 15;
+
+  const countOfApple = input.filter(s => s === "apple").length;
+  if (countOfApple === 2) return 10;
+  if (countOfApple === 3) return 20;
+
+  const countOfCherry = input.filter(s => s === "cherry").length;
+  if (countOfCherry === 2) return 40;
   if (countOfCherry === 3) return 50;
-  else if (countOfCherry === 2) return 40;
-  else if (countOfApple === 3) return 20;
-  else if (countOfApple === 2) return 10;
-  else if (countOfBanana === 3) return 15;
-  else if (countOfBanana === 2) return 5;
-  else if (countOfLemon === 3) return 3;
-  else return 0;
+
+  return 0;
 };
 
 export default router;

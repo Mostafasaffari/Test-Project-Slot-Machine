@@ -1,12 +1,15 @@
 import express, { Request, Response, NextFunction } from "express";
 
-import { createJwt, decryptJwt } from "../helpers/jwt";
+import { IErrorHandle } from "../interfaces/errorHandle";
+
+import { createJwt, authenticateJwt } from "../helpers/jwt";
 import { ResponseData } from "../helpers/responseStructure";
 import { emailPattern, passwordPattern } from "../helpers/regexPatterns";
 import {
   findUserByEmail,
   addUser,
-  findUserByEmailAndPassword
+  findUserByEmailAndPassword,
+  IUser
 } from "../helpers/userMemory";
 
 const router = express.Router();
@@ -24,10 +27,11 @@ router.post(
         !email.match(emailPattern) ||
         !password.match(passwordPattern)
       ) {
-        return res
-          .status(401)
-          .json(ResponseData(null, "email or password is incorrect!!"))
-          .end();
+        const error: IErrorHandle = {
+          status: 401,
+          message: "email or password is incorrect!!"
+        };
+        throw error;
       }
       const token = createJwt(email);
       return res
@@ -54,14 +58,20 @@ router.post(
         const checkDoubleEmail = findUserByEmail(email);
         if (!checkDoubleEmail) {
           addUser({ name, email, password, coins: 20 });
-          res.status(201).json(ResponseData({ email, coins: 20 }));
+          return res.status(201).json(ResponseData({ email, coins: 20 }));
         } else {
-          res
-            .status(409)
-            .json(ResponseData(null, "This email is already registered!!!"));
+          const error: IErrorHandle = {
+            status: 409,
+            message: "This email is already registered!!!"
+          };
+          throw error;
         }
       } else {
-        res.status(400).json(ResponseData(null, "Please fill all fields!"));
+        const error: IErrorHandle = {
+          status: 400,
+          message: "Please fill all fields!"
+        };
+        throw error;
       }
     } catch (err) {
       next(err);
@@ -74,28 +84,17 @@ router.post(
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const token = req.headers.authorization;
-      if (!token) {
+      const user: IUser = authenticateJwt(token);
+      if (!user) {
         return res.status(401).json(ResponseData(null, "Please signIn!!"));
       }
-      try {
-        const jwtObj = decryptJwt(token);
-        const user = findUserByEmail(jwtObj.email);
-        if (user) {
-          return res.status(200).json(
-            ResponseData({
-              email: user.email,
-              name: user.name,
-              coins: user.coins
-            })
-          );
-        } else {
-          return res
-            .status(401)
-            .json(ResponseData(null, "Please signIn to system!!"));
-        }
-      } catch (e) {
-        return res.status(400).json(ResponseData(null, "Bad Request!!!"));
-      }
+      return res.status(200).json(
+        ResponseData({
+          email: user.email,
+          name: user.name,
+          coins: user.coins
+        })
+      );
     } catch (err) {
       next(err);
     }
