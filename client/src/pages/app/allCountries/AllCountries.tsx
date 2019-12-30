@@ -29,6 +29,7 @@ const AllCountries: React.FC = () => {
       setLoading(false);
     } catch (err) {
       message.error(err.message, 5);
+      setLoading(false);
     }
   };
   const tableRowKey = (record: ICountry, index: number) => record.numericCode;

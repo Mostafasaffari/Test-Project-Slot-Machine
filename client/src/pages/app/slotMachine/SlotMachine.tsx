@@ -19,11 +19,13 @@ const SlotMachine: React.FC = () => {
   const [positionReel1, setPositionReel1] = useState<number>(-1);
   const [positionReel2, setPositionReel2] = useState<number>(-1);
   const [positionReel3, setPositionReel3] = useState<number>(-1);
+  const [loading, setLoading] = useState<boolean>(false);
   const { t } = useTranslation();
   const dispatch = useDispatch();
 
   const runSpin = async () => {
     try {
+      setLoading(true);
       const inter = setInterval(() => {
         const randomPosition = Math.floor(Math.random() * 10) * 64 * 2000;
         setPosition(randomPosition);
@@ -35,16 +37,20 @@ const SlotMachine: React.FC = () => {
       setTimeout(() => {
         clearInterval(inter);
         setPosition(0);
+        setLoading(false);
         dispatch(userActions.setUserCoin(machineData.coins));
       }, 2000);
     } catch (err) {
       message.error(err.message);
+      setLoading(false);
     }
   };
   return (
     <SelotMachineWrapper>
       <div className="slotmachine__header">
-        <Button onClick={runSpin}>{t("slotMachine.spin")}</Button>
+        <Button onClick={runSpin} loading={loading}>
+          {t("slotMachine.spin")}
+        </Button>
       </div>
       <div className="slotmachine__spin">
         <Spinner positionReel={positionReel1} randomPosition={position} />
