@@ -81,21 +81,18 @@ router.post(
 );
 
 const calculateCoins = (input: [Reel, Reel, Reel]): number => {
-  console.time("cost");
   const basket = input.reduce((reels: any, reel) => {
     reels[reel] = (reels[reel] || 0) + 1;
     return reels;
   }, {});
-  console.timeEnd("cost");
 
   if (basket.lemon === 3) return 3;
   if (basket.banana === 2) return 5;
   if (basket.banana === 3) return 15;
   if (basket.apple === 2) return 10;
-  if (basket.apple === 3) return 20;  
+  if (basket.apple === 3) return 20;
   if (basket.cherry === 2) return 40;
   if (basket.cherry === 3) return 50;
-
 
   return 0;
 };

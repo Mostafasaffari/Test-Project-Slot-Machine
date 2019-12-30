@@ -24,7 +24,6 @@ const SearchCountries: React.FC = () => {
     setLoading(true);
     try {
       const data = await getCountryByNamesApi(names);
-      console.log(data instanceof Array);
       setFilterCountries(data);
       setLoading(false);
     } catch (err) {
