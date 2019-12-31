@@ -22,7 +22,7 @@ In the root folder
  npm run start:client
 ```
 
-## Please pay attentions to some tips
+## Some tips are useful for you.
 
 1. The project has memory DB, so when you reset your server application, your data will be lost.
 1. client application will run on port 3006 and server on port 3000.
