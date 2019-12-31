@@ -81,6 +81,7 @@
     "url": "git+https://github.com/Mostafasaffari/Test-Project-Slot-Machine.git"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "standard-version": "^7.0.0"
   }
