@@ -19,7 +19,10 @@ In the root folder
 
  npm run start:server
 
- npm run start:client
+```
+In another terminal run
+```
+npm run start:client
 ```
 
 ## Some tips are useful for you.
