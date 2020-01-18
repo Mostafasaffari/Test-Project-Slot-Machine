@@ -50,12 +50,9 @@ router.post(
         "lemon"
       ];
 
-      const randomNumberReel1 =
-        Math.floor(Math.random() * Reel1.length - 1) + 1;
-      const randomNumberReel2 =
-        Math.floor(Math.random() * Reel2.length - 1) + 1;
-      const randomNumberReel3 =
-        Math.floor(Math.random() * Reel3.length - 1) + 1;
+      const randomNumberReel1 = Math.floor(Math.random() * Reel1.length);
+      const randomNumberReel2 = Math.floor(Math.random() * Reel2.length);
+      const randomNumberReel3 = Math.floor(Math.random() * Reel3.length);
 
       const winCoins = calculateCoins([
         Reel1[randomNumberReel1],
