@@ -19,6 +19,15 @@ class MyAPI {
     this.config.baseURL =
       this.config.baseURL || process.env.REACT_APP_SERVER_BASEURL;
   }
+
+  public async get(url: string): Promise<IResponseData> {
+    try {
+      const response = await axios.get(url, this.config);
+      return response.data as IResponseData;
+    } catch (err) {
+      throw err;
+    }
+  }
 }
 
 export { MyAPI };
