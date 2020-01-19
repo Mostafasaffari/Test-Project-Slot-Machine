@@ -1,4 +1,5 @@
 import axios from "axios";
+import handleError from "./handleError";
 
 interface IApiConfig {
   baseURL?: string;
@@ -26,6 +27,14 @@ class MyAPI {
       return response.data as IResponseData;
     } catch (err) {
       throw err;
+    }
+  }
+  public async post(url: string, data: any = {}): Promise<IResponseData> {
+    try {
+      const response = await axios.post(url, data, this.config);
+      return response.data as IResponseData;
+    } catch (err) {
+      return handleError(err);
     }
   }
 }
