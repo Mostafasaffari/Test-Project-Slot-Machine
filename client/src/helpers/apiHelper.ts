@@ -37,6 +37,14 @@ class MyAPI {
       return handleError(err);
     }
   }
+  public async put(url: string, data: any = {}): Promise<IResponseData> {
+    try {
+      const response = await axios.put(url, data, this.config);
+      return response.data as IResponseData;
+    } catch (err) {
+      return handleError(err);
+    }
+  }
 }
 
 export { MyAPI };
