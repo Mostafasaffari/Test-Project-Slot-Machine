@@ -45,6 +45,17 @@ class MyAPI {
       return handleError(err);
     }
   }
+  public async delete(url: string, data: any = {}): Promise<IResponseData> {
+    try {
+      const response = await axios.delete(url, {
+        ...this.config,
+        data: { ...data }
+      });
+      return response.data as IResponseData;
+    } catch (err) {
+      return handleError(err);
+    }
+  }
 }
 
 export { MyAPI };
