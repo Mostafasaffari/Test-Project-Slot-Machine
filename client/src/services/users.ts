@@ -3,7 +3,6 @@ import { MyAPI } from "../helpers/apiHelper";
 import { IUserRegister, IUserSignIn } from "../entities/user";
 
 import { localStore } from "../helpers/localStorage";
-import handleError from "../helpers/handleError";
 
 const api = new MyAPI();
 
@@ -27,11 +26,7 @@ const getUserInfoApi = async () => {
       Authorization: localStore.get("token")
     }
   });
-  try {
-    const response = await apiWithAuth.post(`/user/getUserInfo`);
-    return response.data.data;
-  } catch (err) {
-    return handleError(err);
-  }
+  const response = await apiWithAuth.post(`/user/getUserInfo`);
+  return response.data.data;
 };
 export { registerApi, signInApi, getUserInfoApi };
