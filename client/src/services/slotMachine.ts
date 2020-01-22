@@ -1,18 +1,15 @@
-import axios from "../helpers/apiHelper";
-import handleError from "../helpers/handleError";
+import { MyAPI } from "../helpers/apiHelper";
 import { localStore } from "../helpers/localStorage";
 
 const spinApi = async () => {
-  try {
-    const response = await axios.post(`/slot/spin`, null, {
-      headers: {
-        Authorization: localStore.get("token")
-      }
-    });
-    return response.data.data;
-  } catch (err) {
-    handleError(err);
-  }
+  const apiWithAuth = new MyAPI({
+    headers: {
+      Authorization: localStore.get("token")
+    }
+  });
+
+  const response = await apiWithAuth.post(`/slot/spin`);
+  return response.data.data;
 };
 
 export { spinApi };
