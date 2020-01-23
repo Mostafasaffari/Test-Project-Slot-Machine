@@ -10,14 +10,14 @@ const registerApi = async (input: IUserRegister) => {
   const response = await api.post(`/user/register`, {
     ...input
   });
-  return response.data.data;
+  return response.data;
 };
 
 const signInApi = async (input: IUserSignIn) => {
   const response = await api.post(`/user/signIn`, {
     ...input
   });
-  return response.data.data;
+  return response.data;
 };
 
 const getUserInfoApi = async () => {
@@ -27,6 +27,6 @@ const getUserInfoApi = async () => {
     }
   });
   const response = await apiWithAuth.post(`/user/getUserInfo`);
-  return response.data.data;
+  return response.data;
 };
 export { registerApi, signInApi, getUserInfoApi };
