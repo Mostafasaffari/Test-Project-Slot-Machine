@@ -10,18 +10,18 @@ const getAllCountriesApi = async (): Promise<ICountry[]> => {
   });
 
   const response = await apiWithBase.get(`/all`);
-  return response.data;
+  return response;
 };
 
 const getCountryByNameApi = async (name: string): Promise<ICountry> => {
   const response = await api.get(`/country/fullname/${name}`);
-  return response.data.data["0"];
+  return response.data["0"];
 };
 
 const getCountryByNamesApi = async (names: string[]): Promise<ICountry[]> => {
   const response = await api.get(
     `/country/names/[${names.map(name => `"${name}"`)}]`
   );
-  return response.data.data;
+  return response.data;
 };
 export { getAllCountriesApi, getCountryByNameApi, getCountryByNamesApi };
