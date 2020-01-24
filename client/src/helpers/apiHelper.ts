@@ -21,10 +21,10 @@ class MyAPI {
       this.config.baseURL || process.env.REACT_APP_SERVER_BASEURL;
   }
 
-  public async get(url: string): Promise<IResponseData> {
+  public async get(url: string): Promise<IResponseData | any> {
     try {
       const response = await axios.get(url, this.config);
-      return response.data as IResponseData;
+      return response.data as IResponseData | any;
     } catch (err) {
       throw err;
     }
