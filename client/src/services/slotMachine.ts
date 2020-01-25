@@ -9,7 +9,7 @@ const spinApi = async () => {
   });
 
   const response = await apiWithAuth.post(`/slot/spin`);
-  return response.data.data;
+  return response.data;
 };
 
 export { spinApi };
